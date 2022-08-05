@@ -3,6 +3,8 @@ const app = express();
 const path = require('path');
 const mongoose = require('mongoose');
 
+const Campground = require('./models/campground');
+
 //connectin the mongodb database using mongoose
 mongoose.connect('mongodb://localhost:27017/yelp-camp', {
     useNewUrlParser: true,
@@ -18,6 +20,7 @@ db.once("open", () => {
 app.set('view engine', 'ejs'); //setting ejs as view engine
 app.set('views', path.join(__dirname, 'views'));  //setting the path of view folder
 
+//home route
 app.get('/', (req, res) => {
     res.render('home');
 })
