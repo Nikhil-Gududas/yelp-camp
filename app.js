@@ -25,8 +25,11 @@ app.get('/', (req, res) => {
     res.render('home');
 })
 
-
-
+//index route for showing all campgrounds
+app.get('/campgrounds', async (req, res) => {
+    const campgrounds = await Campground.find({});
+    res.render('campgrounds/index');
+})
 
 
 
