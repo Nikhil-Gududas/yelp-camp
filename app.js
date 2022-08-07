@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const mongoose = require('mongoose');
-
+const methodOverride = require('method-override');
 const Campground = require('./models/campground');
 
 //connectin the mongodb database using mongoose
@@ -21,6 +21,7 @@ app.set('view engine', 'ejs'); //setting ejs as view engine
 app.set('views', path.join(__dirname, 'views'));  //setting the path of view folder
 
 app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
 
 
 //home route
@@ -50,6 +51,16 @@ app.get('/campgrounds/:id', async (req, res) => {
     res.render('campgrounds/show', { campground });
 })
 
+app.get('/campgrounds/:id/edit', async (req, res) => {
+    const { id } = req.params;
+    const campground = await Campground.findById(id);
+    res.render('campgrounds/edit', { campground });
+})
+
+app.put('/campgrounds/:id', async (req, res) => {
+    const campground = await Campground.findByIdAndUpdate(req.params.id, { ...req.body.campground })
+    res.redirect(`/campgrounds/${campground._id}`);
+})
 
 
 app.listen(3000, () => {
