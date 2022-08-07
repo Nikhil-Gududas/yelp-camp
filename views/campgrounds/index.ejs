@@ -13,7 +13,9 @@
     <ul>
         <% for (const campground of campgrounds) {%>
             <li>
-                <%= campground.title %>
+                <a href="/campgrounds/<%= campground._id %> ">
+                    <%= campground.title %>
+                </a>
             </li>
             <% } %>
     </ul>
