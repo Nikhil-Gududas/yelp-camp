@@ -3,6 +3,8 @@ const app = express();
 const path = require('path');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
+const ejsMate = require('ejs-mate');
+
 const Campground = require('./models/campground');
 
 //connectin the mongodb database using mongoose
@@ -17,6 +19,7 @@ db.once("open", () => {
     console.log("Database Connected") //showing successess message if database connected successfully
 })
 
+app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs'); //setting ejs as view engine
 app.set('views', path.join(__dirname, 'views'));  //setting the path of view folder
 
