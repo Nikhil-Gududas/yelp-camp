@@ -28,15 +28,28 @@
                     3 days ago
                 </div>
             </div>
-            <div class="form mb-3">
-                <h2>Leave a Review</h2>
-                <form action="" method="post">
-                    <label for="rating" class="form-label">Rating</label>
-                    <input type="range" name="review[rating]" id="rating" class="form-range" min="1" max="5">
-                    <label for="body" class="form-label">Review</label>
-                    <textarea name="review[body]" id="body" class="form-control mb-3" cols="20" rows="3"></textarea>
-                    <button type="submit" class="btn btn-success">Submit</button>
-                </form>
+            <h2>Leave a Review</h2>
+            <form action="/campgrounds/<%= campground._id %>/reviews" class="needs-validation mb-3" method="post"
+                novalidate>
+                <label for="rating" class="form-label">Rating</label>
+                <input type="range" name="review[rating]" id="rating" class="form-range" min="1" max="5">
+                <div class="mb-3"><label for="body" class="form-label">Review</label>
+                    <textarea name="review[body]" id="body" class="form-control" cols="20" rows="3" required></textarea>
+                    <div class="valid-feedback">
+                        looks good!
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success">Submit</button>
+            </form>
+            <div class="mb-3">
+                <% for (let review of campground.reviews) {%>
+                    <p>
+                        Rating: <%= review.rating %>
+                    </p>
+                    <p>
+                        Review: <%= review.body %>
+                    </p>
+                    <% } %>
             </div>
         </div>
     </div>
