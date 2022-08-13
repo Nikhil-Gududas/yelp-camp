@@ -38,9 +38,7 @@ const validateCampground = (req, res, next) => {
         const msg = error.details.map(e => e.message).join(',');
         throw new ExpressError(msg, 400);
     }
-    else {
-        next()
-    }
+    
 }
 
 const validateReview = (req, res, next) => {
@@ -77,7 +75,6 @@ app.post('/campgrounds', validateCampground, catchAsync(async (req, res, next) =
 app.get('/campgrounds/:id', catchAsync(async (req, res, next) => {
     const { id } = req.params;
     const campground = await Campground.findById(id).populate('reviews');
-    console.log(campground)
     res.render('campgrounds/show', { campground });
 }))
 
