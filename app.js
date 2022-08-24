@@ -6,10 +6,12 @@ const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
 const session = require('express-session');
 const flash = require('connect-flash');
-const ExpressError = require('./utils/ExpressError');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
 
 const campgrounds = require('./routes/campgrounds');
 const reviews = require('./routes/reviews');
+const User = require('./models/user');
 
 
 //connectin the mongodb database using mongoose
@@ -51,10 +53,15 @@ app.use((req, res, next) => {
     next();
 })
 
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
 //home route
 app.get('/', (req, res) => {
     res.render('home');
 })
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 
 app.use('/campgrounds', campgrounds);
