@@ -9,9 +9,11 @@ const flash = require('connect-flash');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 
-const campgrounds = require('./routes/campgrounds');
-const reviews = require('./routes/reviews');
+const ExpressError = require('./utils/ExpressError')
 const User = require('./models/user');
+const campgroundRoutes = require('./routes/campgrounds');
+const reviewRoutes = require('./routes/reviews');
+const userRoutes = require('./routes/users')
 
 
 //connectin the mongodb database using mongoose
@@ -47,25 +49,27 @@ const sessionconfig = {
 
 app.use(session(sessionconfig));
 app.use(flash())
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 app.use((req, res, next) => {
+    res.locals.currentUser = req.user;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
     next();
 })
 
-app.use(passport.initialize());
-app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
 //home route
-app.get('/', (req, res) => {
+app.get('/', (req, res, next) => {
     res.render('home');
 })
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-
-
-app.use('/campgrounds', campgrounds);
-app.use('/campgrounds/:id/reviews', reviews);
+app.use('/campgrounds', campgroundRoutes);
+app.use('/campgrounds/:id/reviews', reviewRoutes);
+app.use('/', userRoutes);
 
 
 app.all('*', (req, res, next) => {
@@ -75,7 +79,6 @@ app.all('*', (req, res, next) => {
 app.use((err, req, res, next) => {
     const { statusCode = 500 } = err;
     if (!err.message) err.message = 'Something went wrong'
-    console.log(err)
     res.status(statusCode).render('error', { err });
 })
 
