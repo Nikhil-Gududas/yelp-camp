@@ -30,15 +30,18 @@ const seedDB = async () => {
             title: `${sample(descriptors)} ${sample(places)}`,
             images: [
                 {
-                    url: 'https://res.cloudinary.com/dtvlxdd2u/image/upload/v1661576499/YelpCamp/skpjte4lhlo7mhf1uxj3.jpg',
-                    filename: 'YelpCamp/skpjte4lhlo7mhf1uxj3',
+                    url: 'https://res.cloudinary.com/dtvlxdd2u/image/upload/v1663235862/YelpCamp/eszv5cqlltfbmd5dm44x.jpg',
+                    filename: 'YelpCamp/eszv5cqlltfbmd5dm44x',
                 },
                 {
-                    url: 'https://res.cloudinary.com/dtvlxdd2u/image/upload/v1661576499/YelpCamp/w91ulljlzpittvyfsumk.jpg',
-                    filename: 'YelpCamp/w91ulljlzpittvyfsumk',
+                    url: 'https://res.cloudinary.com/dtvlxdd2u/image/upload/v1663246847/YelpCamp/l46ev6cxnwxonrjvlp5u.jpg',
+                    filename: 'YelpCamp/l46ev6cxnwxonrjvlp5u',
                 }
             ],
-
+            geometry: {
+                type: 'Point',
+                coordinates: [cities[randomCitie].Longitude, cities[randomCitie].Latitude]
+            },
             description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam, eligendi saepe minima neque dignissimos non unde delectus fuga iusto? Non harum nostrum cupiditate quidem vitae deleniti, voluptatibus atque neque! Similique.',
             price: price,
         }).save()
