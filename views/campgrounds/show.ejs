@@ -117,6 +117,7 @@
         </div>
     </div>
     <script>
+        const mapBoxToken = '<%- process.env.MAPBOX_TOKEN %>';
         let campground = '<%-JSON.stringify(campground)%>';
         campground = JSON.parse(campground);
     </script>
