@@ -60,8 +60,10 @@
 
         <div class="col-6">
 
-            <div id='map' class="mb-3" style='width: 100%; height: 300px;'></div>
-
+            <div id='map' class="mb-3"></div>
+            <div id="maps">
+                skldnpvbsdhrfbib
+            </div>
 
             <% if(currentUser) {%>
                 <h2>Leave a Review</h2>
@@ -117,8 +119,7 @@
         </div>
     </div>
     <script>
-        const mapBoxToken = '<%- process.env.MAPBOX_TOKEN %>';
-        let campground = '<%-JSON.stringify(campground)%>';
-        campground = JSON.parse(campground);
+        const mapToken = '<%-process.env.MAPBOX_TOKEN%>';
+        const campground = <%- JSON.stringify(campground) %>
     </script>
     <script src="/javascript/showMap.js"></script>
