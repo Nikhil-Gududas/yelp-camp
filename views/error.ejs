@@ -5,9 +5,9 @@
                 <h4 class="alert-heading">
                     <%= err.message %>
                 </h4>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae, recusandae.</p>
-                <hr>
-                <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, dolores.</p>
+                <% if (process.env.NODE_ENV !== "production") { %> 
+                    <p><%= err.stack %> </p>
+                    <% } %> 
             </div>
         </div>
     </div>
